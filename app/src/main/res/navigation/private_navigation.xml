@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/private_fragment"
+    android:id="@+id/privates">
+
+    <fragment
+        android:id="@+id/private_fragment"
+        android:label="@string/private_repos"
+        tools:layout="@layout/fragment_private"
+        android:name="com.bed.gitbed.presentation.privates.PrivateFragment"/>
+
+</navigation>

@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">GitBed</string>
+
+    <!-- Auth Screen -->
+    <string name="text_button_home">Entrar</string>
+    <string name="text_description_logo_home">Logo/Imagem do GitHub</string>
+    <string name="text_description_home">Bora logar com seu GitHub :)</string>
+    <string name="text_error_auth">Opps, um erro aconteceu no Login :(</string>
+
+    <!-- Repositorios -->
+    <string name="language">Linguagem</string>
+    <string name="public_repos">Públicos</string>
+    <string name="private_repos">Privados</string>
+    <string name="details_repos">Detalhes</string>
+    <string name="title_repository">Título do Card</string>
+    <string name="type_repository">Tipo do repositorio</string>
+    <string name="description_repository">Descrição do Card</string>
+    <string name="readme">Readme</string>
+    <string name="forks">Número de Forks</string>
+    <string name="share">Compartilhamento</string>
+    <string name="stars">Número de Estrelas</string>
+    <string name="text_error_repositories">Opps, um erro aconteceu carregar os dados :(</string>
+    <string name="error_load_more">Erro ao tentar carregar mais dados :(</string>
+
+
+</resources>

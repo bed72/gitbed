@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/repositories_navigation"
+    app:startDestination="@+id/publics">
+
+    <include app:graph="@navigation/public_navigation" />
+    <include app:graph="@navigation/private_navigation" />
+
+    <fragment
+        android:id="@+id/detail_fragment"
+        android:label="details_repos"
+        tools:layout="@layout/fragment_detail"
+        android:name="com.bed.gitbed.presentation.details.DetailFragment"/>
+
+</navigation>

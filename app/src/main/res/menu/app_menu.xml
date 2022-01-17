@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/publics"
+        android:icon="@drawable/ic_baseline_lock_open"
+        android:title="@string/public_repos" />
+    <item
+        android:id="@+id/privates"
+        android:icon="@drawable/ic_baseline_lock"
+        android:title="@string/private_repos" />
+</menu>

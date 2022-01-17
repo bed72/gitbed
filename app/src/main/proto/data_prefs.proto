@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option java_package = "com.bed.gitbed";
+option java_multiple_files = true;
+
+message DataPreferences {
+  string data = 1;
+}

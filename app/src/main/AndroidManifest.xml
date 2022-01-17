@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bed.gitbed">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name=".GitBed"
+        android:theme="@style/Theme.Gitbed">
+        <activity
+            android:name=".presentation.MainAppActivity"
+            android:theme="@style/Theme.App.Starting"
+            android:exported="true">
+
+            <nav-graph android:value="@navigation/auth_navigation" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="${hostName}"
+                    android:scheme="${schemeName}" />
+
+                <data
+                    android:scheme="http"
+                    android:path="${pathName}"
+                    android:host="${pathHost}" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

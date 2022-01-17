@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/public_fragment"
+    android:id="@+id/publics">
+
+    <fragment
+        android:id="@+id/public_fragment"
+        android:label="@string/public_repos"
+        tools:layout="@layout/fragment_public"
+        android:name="com.bed.gitbed.presentation.publics.PublicFragment"/>
+
+</navigation>
