@@ -12,7 +12,7 @@ val viewModelModule = module {
     }
 
     viewModel {
-        PublicViewModel(get())
+        PublicViewModel( get())
     }
 
     viewModel {

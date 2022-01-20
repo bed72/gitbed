@@ -18,7 +18,6 @@ interface ApiService {
     ): AuthResponse
 
     @GET("user/repos")
-    @Headers("Content-Type: application/json")
     suspend fun repositories(
         @QueryMap
         queries: Map<String, String>

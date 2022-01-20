@@ -1,10 +1,11 @@
-package com.bed.gitbed.presentation.common.adapter
+package com.bed.gitbed.presentation.common.adapter.repositories
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.bed.gitbed.domain.entity.Collaborators
 import com.bed.gitbed.domain.entity.Repositories
-import com.bed.gitbed.presentation.common.viewholder.RepositoriesViewHolder
+import com.bed.gitbed.presentation.common.viewholder.repositories.RepositoriesViewHolder
 
 class RepositoriesAdapter : PagingDataAdapter<Repositories, RepositoriesViewHolder>(diffCallback) {
 

@@ -1,4 +1,4 @@
-package com.bed.gitbed.presentation.common.viewholder
+package com.bed.gitbed.presentation.common.viewholder.repositories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

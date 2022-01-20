@@ -7,6 +7,7 @@ data class Repositories(
     val url: String,
     val name: String,
     val private: Boolean,
-    val language: String?,
+    val language: String,
     val description: String,
+    val collaborators: List<Collaborators>
 )

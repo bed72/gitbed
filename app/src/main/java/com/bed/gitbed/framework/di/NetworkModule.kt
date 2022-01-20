@@ -4,6 +4,7 @@ import com.bed.gitbed.BuildConfig
 import com.bed.gitbed.framework.network.ApiService
 import com.bed.gitbed.framework.network.interceptor.AuthorizationInterceptor
 import com.bed.gitbed.framework.network.interceptor.RepositoriesInterceptor
+import com.bed.gitbed.presentation.common.Utils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -13,12 +14,6 @@ import java.util.concurrent.TimeUnit
 import com.google.gson.GsonBuilder
 
 import com.google.gson.Gson
-
-private const val TIMEOUT_SECONDS = 15L
-
-//private val gson: Gson = GsonBuilder()
-//    .setLenient()
-//    .create()
 
 val networkModule = module {
 
@@ -52,8 +47,8 @@ val networkModule = module {
             .addInterceptor(get<HttpLoggingInterceptor>())
             .addInterceptor(get<RepositoriesInterceptor>())
             .addInterceptor(get<AuthorizationInterceptor>())
-            .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .readTimeout(Utils.TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .connectTimeout(Utils.TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build()
     }
 

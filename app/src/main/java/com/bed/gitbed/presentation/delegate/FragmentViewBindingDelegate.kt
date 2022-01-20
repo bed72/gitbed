@@ -11,8 +11,8 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 class FragmentViewBindingDelegate<VB : ViewBinding>(
-    val fragment: Fragment,                 // referencia ao seu fragment
-    val viewBindingFactory: (View) -> VB    // referncia ao seu metodo de bind da classe ViewBinding
+    val fragment: Fragment,
+    val viewBindingFactory: (View) -> VB
 ) : ReadOnlyProperty<Fragment, VB> {
 
     private var binding: VB? = null
@@ -20,7 +20,6 @@ class FragmentViewBindingDelegate<VB : ViewBinding>(
     init {
         fragment.lifecycle.addObserver(object : DefaultLifecycleObserver {
 
-            // remove o binding ao destruir o fragment
             val viewLifecycleOwnerLiveDataObserver = Observer<LifecycleOwner?> {
                 it?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
                     override fun onDestroy(owner: LifecycleOwner) {
@@ -29,14 +28,12 @@ class FragmentViewBindingDelegate<VB : ViewBinding>(
                 })
             }
 
-            // observa o ciclo de vida ao criar um fragment
             override fun onCreate(owner: LifecycleOwner) {
                 fragment.viewLifecycleOwnerLiveData.observeForever(
                     viewLifecycleOwnerLiveDataObserver
                 )
             }
 
-            // remove observer de lifecycle quando fragment é destruido
             override fun onDestroy(owner: LifecycleOwner) {
                 fragment.viewLifecycleOwnerLiveData.removeObserver(
                     viewLifecycleOwnerLiveDataObserver
@@ -45,25 +42,17 @@ class FragmentViewBindingDelegate<VB : ViewBinding>(
         })
     }
 
-    // metodo que cria efetivamente o binding
     override fun getValue(thisRef: Fragment, property: KProperty<*>): VB {
-        // se ja existe retorna direto
         binding?.let { return it }
 
-        // so cria se estiver ao menos inicializao
         val lifecycle = fragment.viewLifecycleOwner.lifecycle
-        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.INITIALIZED)) {
+        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.INITIALIZED))
             throw IllegalStateException("Should not attempt to get bindings when Fragment views are destroyed.")
-        }
 
-        // do contrario cria o binding
+
         return viewBindingFactory(thisRef.requireView()).also { this.binding = it }
     }
 }
 
-// +---------------------------------------------------------------------+
-// | Extensão "MÃO NA RODA" que facilita inicialização do viewBinding    |
-// +---------------------------------------------------------------------+
-// Passe "NomeDoXMlBinding::bind" por referencia a este metodo
 fun <T : ViewBinding> Fragment.viewBinding(viewBindingFactory: (View) -> T) =
     FragmentViewBindingDelegate(this, viewBindingFactory)

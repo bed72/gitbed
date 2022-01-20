@@ -1,11 +1,13 @@
-package com.bed.gitbed.presentation.common.viewholder
+package com.bed.gitbed.presentation.common.viewholder.repositories
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bed.gitbed.R
 import com.bed.gitbed.databinding.ItemRepositoriesBinding
+import com.bed.gitbed.domain.entity.Collaborators
 import com.bed.gitbed.domain.entity.Repositories
+import com.bed.gitbed.presentation.common.adapter.collaborators.CollaboratorsAdapter
 
 class RepositoriesViewHolder(
     itemRepositoriesBinding: ItemRepositoriesBinding
@@ -15,12 +17,29 @@ class RepositoriesViewHolder(
     private val icon = itemRepositoriesBinding.iconRepository
     private val language = itemRepositoriesBinding.languageRepository
     private val description = itemRepositoriesBinding.descriptionRepository
+    private val collaboratorRecyclerView = itemRepositoriesBinding.collaboratorsRepository
+
+    private lateinit var collaboratorsAdapter: CollaboratorsAdapter
+
+    init {
+        initAdapter()
+    }
 
     fun bind(repositories: Repositories) {
         name.text = repositories.name
         language.text = repositories.language
         description.text = repositories.description
         icon.setImageResource(typeIcon(repositories))
+        collaboratorsAdapter.submitList(repositories.collaborators)
+    }
+
+    private fun initAdapter() {
+        collaboratorsAdapter = CollaboratorsAdapter()
+
+        with(collaboratorRecyclerView) {
+            setHasFixedSize(true)
+            adapter = collaboratorsAdapter
+        }
     }
 
     private fun typeIcon(repositories: Repositories) =

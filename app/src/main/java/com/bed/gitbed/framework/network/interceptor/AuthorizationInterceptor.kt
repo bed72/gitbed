@@ -1,6 +1,7 @@
 package com.bed.gitbed.framework.network.interceptor
 
 import com.bed.gitbed.data.repository.preferences.PreferencesRepository
+import com.bed.gitbed.presentation.common.Utils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -14,7 +15,9 @@ class AuthorizationInterceptor(
         val request = chain.request()
         val requestAuthorization = formatAuthorizationRequest(request)
 
-        return if (PATH in request.url.toString())
+        return if (
+            Utils.PATH_REPOSITORIES_INTERCEPTOR in request.url.toString() ||
+            Utils.PATH_COLLABORATORS_INTERCEPTOR in request.url.toString())
             chain.proceed(requestAuthorization)
         else chain.proceed(request)
     }
@@ -34,7 +37,6 @@ class AuthorizationInterceptor(
 
     companion object {
         private const val DATA = "data"
-        private const val PATH = "/repos"
         private const val HEADER_BEARER = " Bearer"
         private const val HEADER_AUTHORIZATION = "authorization"
     }

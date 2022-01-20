@@ -8,10 +8,10 @@ import androidx.navigation.fragment.findNavController
 import com.bed.gitbed.BuildConfig
 import com.bed.gitbed.R
 import com.bed.gitbed.databinding.FragmentAuthBinding
-import com.google.android.material.snackbar.Snackbar
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bed.gitbed.presentation.auth.AuthViewModel.AuthState
+import com.bed.gitbed.presentation.common.snack
 
 class AuthFragment : Fragment(R.layout.fragment_auth) {
 
@@ -84,9 +84,6 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
         binding.flipperAuth.displayedChild = POSITION_SHOW_BUTTON
     }
 
-    private fun View.snack(message: String, duration: Int = Snackbar.LENGTH_LONG) {
-        Snackbar.make(this, message, duration).show()
-    }
 
     companion object {
         private const val CODE = "code"

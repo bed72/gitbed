@@ -1,6 +1,7 @@
 package com.bed.gitbed.framework.network.interceptor
 
 import com.bed.gitbed.framework.network.response.RepositoryResponse
+import com.bed.gitbed.presentation.common.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.Interceptor
@@ -16,14 +17,15 @@ class RepositoriesInterceptor(
         val request = chain.request()
         val response = chain.proceed(request)
 
-        return if (response.code == SUCCESS && PATH in request.url.toString())
+        return if (response.code == SUCCESS && Utils.PATH_REPOSITORIES_INTERCEPTOR in request.url.toString())
            handleResponse(response)
         else response
     }
 
     private fun handleResponse(response: Response): Response =
         try {
-            val formatted = formatResponse(response.body, nextPage(response))
+            val nextPage = nextPage(response)
+            val formatted = formatResponse(response.body, nextPage)
             val body = formatted.toResponseBody(response.body?.contentType())
 
             response.newBuilder().body(body).build()
@@ -47,11 +49,10 @@ class RepositoriesInterceptor(
     }
 
     private fun nextPage(response: Response) =
-        response.header("link")?.substringAfter("page=")?.substringBefore("&per_page")?.toInt() ?: 0
+        response.header("link")?.substringAfter("&page=")?.substringBefore(">")?.toInt() ?: 0
 
     companion object {
         private const val SUCCESS = 200
-        private const val PATH = "/repos"
         private const val OFFSET = "offset"
         private const val RESULTS = "results"
         private const val TOTAL_RESULTS = "total"

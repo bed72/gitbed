@@ -1,9 +1,9 @@
-package com.bed.gitbed.presentation.common.adapter
+package com.bed.gitbed.presentation.common.adapter.repositories
 
 import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
-import com.bed.gitbed.presentation.common.viewholder.RepositoriesLoadMoreViewHolder
+import com.bed.gitbed.presentation.common.viewholder.repositories.RepositoriesLoadMoreViewHolder
 
 class RepositoriesLoadMoreAdapter(
     private val retry: () -> Unit

@@ -1,6 +1,8 @@
 package com.bed.gitbed.framework.network.response
 
+import com.bed.gitbed.domain.entity.Collaborators
 import com.bed.gitbed.domain.entity.Repositories
+import com.bed.gitbed.presentation.common.Utils
 import com.google.gson.annotations.SerializedName
 
 data class RepositoryResponse(
@@ -27,6 +29,8 @@ data class RepositoryResponse(
 
     @SerializedName("stargazers_count")
     val stars: Int,
+
+    var collaborators: List<CollaboratorsResponse>?
 )
 
 fun RepositoryResponse.toEntity() =
@@ -37,6 +41,10 @@ fun RepositoryResponse.toEntity() =
         forks = this.forks,
         stars = this.stars,
         private = this.private,
-        language = this.language,
-        description = this.description ?: "Opps esse veio sem descrição :("
+        language = this.language ?: Utils.LANGUAGE_MESSAGE_RESPONSE,
+        description = this.description ?: Utils.DESCRIPTION_MESSAGE_RESPONSE,
+        collaborators = this.collaborators?.map { it.toEntity() } ?: defaultCollaborators
     )
+
+private val defaultCollaborators =
+    listOf(Collaborators(id = Utils.ID_USER, avatarUrl = Utils.AVATAR_URL))

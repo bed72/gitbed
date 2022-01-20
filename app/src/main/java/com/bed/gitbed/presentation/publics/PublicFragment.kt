@@ -10,9 +10,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import com.bed.gitbed.R
 import com.bed.gitbed.databinding.FragmentPublicBinding
-import com.bed.gitbed.presentation.common.adapter.RepositoriesAdapter
-import com.bed.gitbed.presentation.common.adapter.RepositoriesLoadMoreAdapter
-import com.google.android.material.snackbar.Snackbar
+import com.bed.gitbed.presentation.common.Utils
+import com.bed.gitbed.presentation.common.adapter.repositories.RepositoriesAdapter
+import com.bed.gitbed.presentation.common.adapter.repositories.RepositoriesLoadMoreAdapter
+import com.bed.gitbed.presentation.common.snack
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -27,23 +28,20 @@ class PublicFragment : Fragment(R.layout.fragment_public) {
 
         binding = FragmentPublicBinding.bind(view)
 
-        initPublicAdapter()
+        initAdapter()
         observeEvents()
-
         fetchRepositories()
     }
 
-    private fun fetchRepositories() =
-        lifecycleScope.launch {
+    private fun fetchRepositories() = lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.fetchRepositories(REPOSITORIES_PUBLIC).collect { pagingData ->
+                viewModel.fetchRepositories(Utils.REPOSITORIES_PUBLIC).collect { pagingData ->
                     repositoriesAdapter.submitData(pagingData)
                 }
             }
         }
 
-
-    private fun initPublicAdapter() {
+    private fun initAdapter() {
         repositoriesAdapter = RepositoriesAdapter()
 
         with(binding.publics.recycler, {
@@ -60,30 +58,14 @@ class PublicFragment : Fragment(R.layout.fragment_public) {
         lifecycleScope.launch {
             repositoriesAdapter.loadStateFlow.collectLatest { loadState ->
                 binding.publics.flipper.displayedChild = when(loadState.refresh) {
-                    is LoadState.Loading -> {
-                        FLIPPER_CHILD_LOADING
-                    }
-                    is LoadState.NotLoading -> {
-                        FLIPPER_CHILD_CHARACTERS
-                    }
+                    is LoadState.Loading -> Utils.FLIPPER_CHILD_LOADING
+                    is LoadState.NotLoading -> Utils.FLIPPER_CHILD_CHARACTERS
                     is LoadState.Error -> {
                         view?.snack(getString(R.string.text_error_repositories))
-                        FLIPPER_CHILD_ERROR
+                        Utils.FLIPPER_CHILD_ERROR
                     }
                 }
             }
         }
-    }
-
-
-    private fun View.snack(message: String, duration: Int = Snackbar.LENGTH_LONG) {
-        Snackbar.make(this, message, duration).show()
-    }
-
-    companion object {
-        private const val FLIPPER_CHILD_LOADING = 0
-        private const val FLIPPER_CHILD_CHARACTERS = 1
-        private const val FLIPPER_CHILD_ERROR = 2
-        private const val REPOSITORIES_PUBLIC = "false"
     }
 }
